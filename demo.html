@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button class="btn">添加元素</button>
+    <button class="prev">撤销</button>
+    <button class="next">还原</button>
+    <div id="root"></div>
+  </body>
+</html>
+<script src="./Undo.js"></script>
+<script src="./widget.js"></script>
+<script src="./setOptionTool.js"></script>
+<script>
+  const undoManager = new Undo();
+  document.querySelector(".btn").onclick = function() {
+    const widget = new Widget();
+    undoManager.execute(new SetOptionTool(widget));
+  };
+  document.querySelector(".prev").onclick = function() {
+    if (undoManager.canUndo()) {
+      undoManager.undo();
+    }
+  };
+  document.querySelector(".next").onclick = function() {
+    if (undoManager.canRedo()) {
+      undoManager.redo();
+    }
+  };
+</script>
